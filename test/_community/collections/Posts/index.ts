@@ -8,11 +8,31 @@ export const PostsCollection: CollectionConfig = {
   slug: postsSlug,
   admin: {
     useAsTitle: 'title',
+    livePreview: {
+      url: ({ data, req }) => {
+        // This is a placeholder URL for simulating a live preview.
+        const path = 'https://beease.fr'
+
+        return path
+      },
+    },
   },
   fields: [
     {
       name: 'title',
       type: 'text',
+    },
+    {
+      name: 'checkbox',
+      type: 'checkbox',
+      defaultValue: false,
+    },
+    {
+      name: 'conditionalField',
+      type: 'text',
+      admin: {
+        condition: (_, { checkbox }) => checkbox,
+      },
     },
     {
       name: 'content',
@@ -22,4 +42,12 @@ export const PostsCollection: CollectionConfig = {
       }),
     },
   ],
+  versions: {
+    drafts: {
+      autosave: {
+        interval: 100,
+      },
+    },
+    maxPerDoc: 50,
+  },
 }
